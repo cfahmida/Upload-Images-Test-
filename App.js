@@ -4,54 +4,50 @@ import { ImagePicker } from 'expo';
 
 export default class App extends React.Component {
   state = {
-    image: null,
-    image2: null,
-    image3: null,
-    image4: null
+    images[null, null, null, null];
   };
 
-
   render() {
-    let { image } = this.state;
-    let { image2 } = this.state;
-    let { image3 } = this.state;
-    let { image4 } = this.state;
+    let  { images[0] } = this.state;
+    let  { images[1] }  = this.state;
+    let  { images[2] }  = this.state;
+    let  { images[3] }  = this.state;
 
     return (
 
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-around' }}>
       <ScrollView>
 
-     <View style={buttonStyles.attempt1}>
+     <View style={buttonStyles.alternativeLayoutButtonContainer}>
       <Button
         title="Upload from Photos"
-        onPress={this._pickImage4}
-      />
-      </View>
-      {image4 &&
-        <Image source={{ uri: image4 }} style={{ width: 200, height: 200 }} />}
-
-      <Button
-        title="Choose Image from Photos"
         onPress={this._pickImage3}
       />
-      {image3 &&
-        <Image source={{ uri: image3 }} style={{ width: 200, height: 200 }} />}
+      </View>
+      {images[3] &&
+        <Image source={{ uri: images[3] }} style={{ width: 200, height: 200 }} />}
+
+      <Button
+        title="Pick an image from camera roll"
+        onPress={this._pickImage2}
+      />
+      {images[2] &&
+        <Image source={{ uri: images[2] }} style={{ width: 200, height: 200 }} />}
 
         <Button
-          title="Choose Image from Photos"
-          onPress={this._pickImage}
+          title="Pick an image from camera roll"
+          onPress={this._pickImage1}
         />
-        {image &&
-          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+        {images[1] &&
+          <Image source={{ uri: images[1] }} style={{ width: 200, height: 200 }} />}
 
 
           <Button
-            title="Choose Image from Photos"
-            onPress={this._pickImage2}
+            title="Pick a second image from camera roll"
+            onPress={this._pickImage0}
           />
-          {image2 &&
-            <Image source={{ uri: image2 }} style={{ width: 200, height: 200 }} />}
+          {images[0] &&
+            <Image source={{ uri: images[0] }} style={{ width: 200, height: 200 }} />}
 
       </ScrollView>
       </View>
@@ -61,7 +57,37 @@ export default class App extends React.Component {
 
 
 
- _pickImage = async () => {
+
+
+  _pickImage0 = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      this.setState({ images[0]: result.uri });
+    }
+  };
+
+
+  _pickImage1 = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      this.setState({ images[1]: result.uri });
+    }
+  };
+
+
+  _pickImage2 = async () => {
       let result = await ImagePicker.launchImageLibraryAsync({
         allowEditing: true,
         aspect: [4, 3],
@@ -70,7 +96,7 @@ export default class App extends React.Component {
       console.log(result);
 
       if(!result.cancelled) {
-        this.setState({ image: result.uri});
+        this.setState({ images[2]: result.uri});
       }
     };
 
@@ -84,51 +110,23 @@ export default class App extends React.Component {
     console.log(result);
 
     if (!result.cancelled) {
-      this.setState({ image3: result.uri });
+      this.setState({ images[3]: result.uri });
     }
   };
 
-
-  _pickImage4 = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-    });
-
-    console.log(result);
-
-    if (!result.cancelled) {
-      this.setState({ image4: result.uri });
-    }
-  };
-
-
-
-_pickImage2 = async () => {
-  let result = await ImagePicker.launchImageLibraryAsync({
-    allowsEditing: true,
-    aspect: [4, 3],
-  });
-
-  console.log(result);
-
-  if (!result.cancelled) {
-    this.setState({ image2: result.uri });
-  }
-};
 
 }
 
 
 const buttonStyles = StyleSheet.create({
 
-  attempt1: {
+  alternativeLayoutButtonContainer: {
     margin: 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
     backgroundColor: '#66cccc',
     alignItems: 'center',
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 8,
   }
 })
